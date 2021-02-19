@@ -1,0 +1,37 @@
+---
+- name: Install prerequisites
+  apt:
+    name: [ 'libssl-dev' ]
+    state: present
+    update_cache: no
+  become: yes
+
+- name: Register Keys for nodesorce
+  apt_key:
+    url: "{{ item }}"
+    state: present
+  become: yes
+  with_items:
+    - https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+  when: 
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "buster"
+
+- name: Add nodesorce repository for Debian
+  apt_repository:
+    repo: "{{ item }}"
+    state: present
+    update_cache: no
+  become: yes
+  with_items:
+    - deb https://deb.nodesource.com/node_15.x buster main
+  when: 
+    - ansible_distribution == "Debian"
+    - ansible_distribution_release == "buster"
+
+- name: Install node.js-package
+  apt:
+    name: [ 'nodejs' ]
+    state: present
+    update_cache: no
+  become: yes
