@@ -25,6 +25,7 @@
   become: yes
   with_items:
     - deb https://deb.nodesource.com/node_15.x buster main
+    - deb-src https://deb.nodesource.com/node_15.x buster main
   when: 
     - ansible_distribution == "Debian"
     - ansible_distribution_release == "buster"
