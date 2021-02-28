@@ -6,7 +6,7 @@
     update_cache: no
   become: yes
 
-- name: Register Keys for nodesorce
+- name: Register Keys for nodesource
   apt_key:
     url: "{{ item }}"
     state: present
