@@ -3,7 +3,8 @@
   apt:
     name: [ 'libssl-dev' ]
     state: present
-    update_cache: no
+    update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
+    cache_valid_time: "{{ apt_proxy.update_cache | default(0) }}"
   become: yes
 
 - name: Register Keys for nodesource
@@ -21,7 +22,8 @@
   apt_repository:
     repo: "{{ item }}"
     state: present
-    update_cache: no
+    update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
+    cache_valid_time: "{{ apt_proxy.update_cache | default(0) }}"
   become: yes
   with_items:
     - deb https://deb.nodesource.com/node_15.x buster main
@@ -34,5 +36,6 @@
   apt:
     name: [ 'nodejs' ]
     state: present
-    update_cache: no
+    update_cache:     "{{ apt_proxy.update_repo | default(no) }}"
+    cache_valid_time: "{{ apt_proxy.update_cache | default(0) }}"
   become: yes
